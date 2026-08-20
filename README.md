@@ -6,6 +6,10 @@ digital está, qué le falta, y cuáles de nuestros servicios le encajan.
 
 La idea es dejar de armar esos decks a mano. Toma alrededor de un minuto por sitio.
 
+Está desplegado en https://analizador-web-320250474691.us-central1.run.app —
+la primera petición del día se demora unos 15 segundos extra porque el servicio
+escala a cero y tiene que levantar la instancia.
+
 ## Cómo funciona
 
 Son tres pasos encadenados:
@@ -74,14 +78,22 @@ real, porque `/analizar` es una sola petición larga.
 
 ## Deploy
 
-Va a Cloud Run. El `deploy.sh` tiene los comandos comentados:
+Corre en Cloud Run, proyecto `grupodot-analizador`, región `us-central1`, servicio
+`analizador-web`. Para volver a desplegar después de un cambio:
 
 ```bash
 bash deploy.sh
 ```
 
-Construye la imagen con Cloud Build, la despliega en `us-central1` y saca la
-`ANTHROPIC_API_KEY` de Secret Manager. La key nunca entra a la imagen ni al repo.
+Construye la imagen con Cloud Build, la despliega y saca la `ANTHROPIC_API_KEY`
+de Secret Manager (secreto `anthropic-api-key`). La key nunca entra a la imagen
+ni al repo. El script tiene comentado el porqué de cada flag.
+
+Para ver qué está pasando en producción:
+
+```bash
+gcloud run services logs tail analizador-web --region us-central1
+```
 
 Detalles que importan si vas a tocar el deploy:
 
@@ -102,6 +114,12 @@ distinta. Analizar y descargar sí funciona, porque pasa dentro de la misma
 petición. Arreglarlo bien es mover los artefactos a un bucket de GCS.
 
 **No hay caché.** Analizar dos veces el mismo sitio son dos llamadas a Claude.
+
+**El servicio está abierto.** Se desplegó con `--allow-unauthenticated` y sin
+límite de peticiones, así que cualquiera con la URL puede disparar análisis
+contra nuestra API key. Mientras la URL no circule fuera del equipo no pasa nada,
+pero antes de compartirla con clientes hay que ponerle algo delante: IAP, un
+token, o al menos rate limiting.
 
 ## Estructura
 
