@@ -1,0 +1,20 @@
+# Secretos
+.env
+.env.local
+
+# Entorno virtual
+venv/
+
+# Bytecode
+__pycache__/
+*.pyc
+
+# Artefactos generados por el pipeline
+diagnosticos/*.json
+diagnosticos/*.pptx
+
+# Código Gemini de referencia: tiene una API key hardcodeada (ver
+# analisis_gemini.py:26 y prueba_fase2.py:10). Queda solo en local,
+# NO se versiona. La Fase 2 vive en analisis_claude.py.
+analisis_gemini.py
+prueba_fase2.py

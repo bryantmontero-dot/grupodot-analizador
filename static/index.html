@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Analizador Web — Grupodot</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="cabecera">
+    <div class="marca">
+      <img id="logo" src="/logo-dot.png" alt="Grupodot" />
+      <span id="wordmark" class="wordmark oculto">grupo<span>dot</span></span>
+    </div>
+    <span class="etiqueta">Diagnóstico MarTech</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Analiza la madurez digital de cualquier sitio</h1>
+      <p class="sub">
+        Escaneamos el stack MarTech del sitio, lo analizamos con IA y generamos
+        una presentación comercial lista para el cliente.
+      </p>
+
+      <form id="form" class="buscador" autocomplete="off">
+        <input
+          id="url"
+          type="text"
+          placeholder="https://www.ejemplo.com"
+          aria-label="URL a analizar"
+          required
+        />
+        <button id="btn" type="submit">Analizar</button>
+      </form>
+      <p class="nota">El análisis completo toma entre 30 y 90 segundos.</p>
+    </section>
+
+    <!-- Loader -->
+    <section id="loader" class="tarjeta loader oculto">
+      <div class="spinner" aria-hidden="true"></div>
+      <p id="progreso">Escaneando sitio...</p>
+      <p class="nota" id="progreso-url"></p>
+    </section>
+
+    <!-- Error -->
+    <section id="error" class="tarjeta error oculto">
+      <h3>No se pudo completar el análisis</h3>
+      <p id="error-msg"></p>
+    </section>
+
+    <!-- Resultado -->
+    <section id="resultado" class="tarjeta oculto">
+      <div class="resultado-cabecera">
+        <div>
+          <p class="etiqueta-mini">Sitio analizado</p>
+          <h2 id="r-url"></h2>
+          <p class="nota" id="r-sector"></p>
+        </div>
+        <div class="score">
+          <div class="score-num"><span id="r-score">–</span><small>/100</small></div>
+          <div class="score-nivel" id="r-nivel"></div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <h3>Resumen ejecutivo</h3>
+        <p id="r-resumen"></p>
+      </div>
+
+      <div class="bloque" id="bloque-servicios">
+        <h3>Servicios recomendados</h3>
+        <ul id="r-servicios" class="lista-servicios"></ul>
+      </div>
+
+      <div class="bloque" id="bloque-quickwins">
+        <h3>Quick wins</h3>
+        <ul id="r-quickwins" class="lista-quickwins"></ul>
+      </div>
+
+      <div class="acciones">
+        <a id="r-descarga" class="btn-descarga" href="#">Descargar presentación (.pptx)</a>
+        <span class="nota" id="r-tiempo"></span>
+      </div>
+    </section>
+
+    <!-- Historial -->
+    <section id="historial" class="historial">
+      <div class="historial-cabecera">
+        <h3>Historial de análisis</h3>
+        <span class="historial-total" id="h-total"></span>
+      </div>
+
+      <p class="nota" id="h-estado">Cargando historial...</p>
+      <div id="h-lista" class="historial-lista"></div>
+    </section>
+  </main>
+
+  <footer>Grupodot · herramienta interna de demo</footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

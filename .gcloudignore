@@ -1,0 +1,36 @@
+# Qué NO se sube al build de Cloud Build.
+# Ojo: si este archivo existe, gcloud IGNORA .gitignore por completo.
+
+# Entorno virtual local (cientos de MB, y binarios de Windows inservibles en Linux)
+venv/
+.venv/
+env/
+
+# Bytecode y caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Secretos: la API key entra por Secret Manager, nunca en la imagen
+.env
+.env.*
+!.env.example
+
+# Artefactos generados en local (en Cloud Run viven en /tmp)
+diagnosticos/
+
+# Código Gemini de referencia — tiene keys hardcodeadas, NO debe ir a la imagen
+analisis_gemini.py
+prueba_fase2.py
+
+# Utilidades de prueba
+validar_fase2_simulado.py
+
+# Git y editores
+.git/
+.gitignore
+.idea/
+.vscode/
+*.swp
+.DS_Store
